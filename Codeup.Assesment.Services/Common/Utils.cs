@@ -25,6 +25,7 @@ namespace Codeup.Assesment.Services.Common
             getOrderDto.Id = order.Id;
             getOrderDto.Status = order.Status;
             getOrderDto.UserId = order.UserId;
+            getOrderDto.CreatedAt = order.CreatedAt;
             if (order.OrderItems != null)
                 getOrderDto.OrderItems = order.OrderItems.ToDto();
             return getOrderDto;
