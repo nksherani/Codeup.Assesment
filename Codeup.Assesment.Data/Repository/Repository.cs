@@ -9,8 +9,8 @@ namespace Codeup.Assesment.Data.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private OrdersDbContext _context = null;
-        private DbSet<T> table = null;
+        private OrdersDbContext _context;
+        private DbSet<T> table;
         public Repository(OrdersDbContext context)
         {
             this._context = context;
@@ -56,7 +56,8 @@ namespace Codeup.Assesment.Data.Repository
         public void Delete(object id)
         {
             T existing = table.Find(id);
-            table.Remove(existing);
+            if (existing != null)
+                table.Remove(existing);
         }
         public void Save()
         {
