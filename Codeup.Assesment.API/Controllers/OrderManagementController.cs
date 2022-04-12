@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Codeup.Assesment.DTOs;
+using Codeup.Assesment.Services;
+using Codeup.Assesment.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,99 @@ namespace Codeup.Assesment.API.Controllers
     [ApiController]
     public class OrderManagementController : ControllerBase
     {
-        // GET: api/<OrderManagement>
-        [HttpGet("orders")]
-        public IEnumerable<string> GetOrder()
+        private readonly IOrderManagementService _orderManagementService;
+
+        public OrderManagementController(IOrderManagementService orderManagementService)
         {
-            return new string[] { "value1", "value2" };
+            this._orderManagementService = orderManagementService;
+        }
+        // GET: api/<OrderManagement>/orders
+        [HttpGet]
+        public async Task<IActionResult> GetOrder()
+        {
+            try
+            {
+                return Ok(await _orderManagementService.GetAllOrders());
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         // GET api/<OrderManagement>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{orderId}")]
+        public async Task<IActionResult> GetOrder(int orderId)
         {
-            return "value";
+            try
+            {
+                return Ok(await _orderManagementService.GetOrderById(orderId));
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         // POST api/<OrderManagement>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CreateOrderDto order)
         {
+            try
+            {
+                GetOrderDto created = await _orderManagementService.CreateOrder(order);
+                return Created(created.Id.ToString(), created);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         // PUT api/<OrderManagement>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{orderId}")]
+        public async Task<IActionResult> Put(int orderId, [FromBody] UpdateOrderDto order)
         {
+            try
+            {
+                await _orderManagementService.UpdateOrder(orderId, order);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/<OrderManagement>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{orderId}")]
+        public async Task<IActionResult> Delete(int orderId)
         {
+            try
+            {
+                await _orderManagementService.RemoveOrder(orderId);
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
     }
 }

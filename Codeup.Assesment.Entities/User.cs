@@ -10,9 +10,12 @@ namespace Codeup.Assesment.Entities
 {
     public class User
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string FullName { get; set; }
         [Timestamp]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public byte[] CreatedAt { get; set; }
         public int CountryCode { get; set; }
         public virtual Country Country { get; set; }

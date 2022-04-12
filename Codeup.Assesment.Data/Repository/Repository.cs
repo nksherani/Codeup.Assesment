@@ -28,6 +28,19 @@ namespace Codeup.Assesment.Data.Repository
             }
             return query.ToList();
         }
+
+        public async Task<IEnumerable<T>> GetAllAsync(string includes = "")
+        {
+            var query = table.AsQueryable();
+            if (!string.IsNullOrEmpty(includes))
+            {
+                var includesList = includes.Split(",");
+                foreach (var include in includesList)
+                    query = query.Include(include.Trim());
+            }
+            return await query.ToListAsync();
+        }
+
         public IQueryable<T> GetAllQueryable(string includes = "")
         {
             var query = table.AsQueryable();
@@ -43,10 +56,18 @@ namespace Codeup.Assesment.Data.Repository
         {
             return table.Find(id);
         }
+        public async Task<T> GetByIdAsync(object id)
+        {
+            return await table.FindAsync(id);
+        }
         public T Insert(T obj)
         {
             return table.Add(obj).Entity;
 
+        }
+        public async Task<T> InsertAsync(T obj)
+        {
+            return (await table.AddAsync(obj)).Entity;
         }
         public void Update(T obj)
         {

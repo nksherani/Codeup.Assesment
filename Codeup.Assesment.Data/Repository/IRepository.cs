@@ -15,5 +15,8 @@ namespace Codeup.Assesment.Data.Repository
         void Delete(object id);
         void Save();
         IQueryable<T> GetAllQueryable(string includes = "");
+        Task<T> InsertAsync(T obj);
+        Task<IEnumerable<T>> GetAllAsync(string includes = "");
+        Task<T> GetByIdAsync(object id);
     }
 }

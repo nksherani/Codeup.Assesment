@@ -42,8 +42,7 @@ namespace Codeup.Assesment.Data
                     .HasMaxLength(200);
 
                 entity.Property(e => e.CreatedAt)
-                    .HasColumnName("created_at")
-                    .ValueGeneratedOnAdd();
+                    .HasColumnName("created_at");
                 
                 entity.Property(e => e.CountryCode).HasColumnName("country_code");
 
@@ -64,11 +63,8 @@ namespace Codeup.Assesment.Data
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.CountryCode).HasColumnName("country_code");
                 entity.Property(e => e.MerchantName).HasColumnName("merchant_name");
-                entity.Property(e => e.CreatedAt)
-                        .HasColumnName("created_at")
-                        .ValueGeneratedOnAdd();
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at").HasDefaultValueSql("convert(varchar, getdate(), 20)");
                 entity.Property(e => e.AdminId).HasColumnName("admin_id");
-
             });
 
             modelBuilder.Entity<MerchantPeriod>(entity =>
@@ -111,7 +107,9 @@ namespace Codeup.Assesment.Data
                 entity.Property(e => e.Status).HasColumnName("status");
                 entity.Property(e => e.CreatedAt)
                         .HasColumnName("created_at")
-                        .ValueGeneratedOnAdd();
+                        .HasDefaultValueSql("getdate()");
+
+                entity.Navigation<Merchant>(e => e.Merchant).AutoInclude();
 
             });
 
@@ -123,10 +121,9 @@ namespace Codeup.Assesment.Data
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.UserId).HasColumnName("user_id");
                 entity.Property(e => e.Status).HasColumnName("status");
-                entity.Property(e => e.CreatedAt)
-                        .HasColumnName("created_at")
-                        .ValueGeneratedOnAdd();
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at").HasDefaultValueSql("convert(varchar, getdate(), 20)");
 
+                entity.Navigation<OrderItem>(e => e.OrderItems).AutoInclude();
             });
             modelBuilder.Entity<OrderItem>(entity =>
             {
@@ -144,6 +141,8 @@ namespace Codeup.Assesment.Data
                     .HasColumnName("product_id")
                    .IsRequired();
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Navigation<Product>(e => e.Product).AutoInclude();
 
             });
 

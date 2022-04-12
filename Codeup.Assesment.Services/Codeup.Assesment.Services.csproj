@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Codeup.Assesment.Data\Codeup.Assesment.Data.csproj" />
+    <ProjectReference Include="..\Codeup.Assesment.Models\Codeup.Assesment.DTOs.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 using Codeup.Assesment.Data;
 using Codeup.Assesment.Data.Repository;
 using Codeup.Assesment.Services;
+using Codeup.Assesment.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,8 @@ services.AddSwaggerGen();
 services.AddDbContext<OrdersDbContext>(options =>
        options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-services.AddScoped<OrderManagementService>();
+services.AddScoped<ISeedService, SeedService>();
+services.AddScoped<IOrderManagementService, OrderManagementService>();
 
 
 var app = builder.Build();
