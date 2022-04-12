@@ -76,12 +76,13 @@ namespace Codeup.Assesment.Data
                 entity.HasKey(e => e.Id);
                 entity.ToTable("merchant_periods");
 
-                entity.HasOne(r => r.Merchant)
-                    .WithOne(t => t.MerchantPeriod)
+                entity.HasOne(r => r.Merchant1)
+                    .WithOne(t => t.MerchantPeriod1)
                     .HasForeignKey<MerchantPeriod>(r => r.MerchantId);
-                entity.HasOne(r => r.Merchant)
-                    .WithOne(t => t.MerchantPeriod)
-                    .HasForeignKey<MerchantPeriod>(r => r.CountryCode);
+                entity.HasOne(r => r.Merchant2)
+                    .WithOne(t => t.MerchantPeriod2)
+                    .HasForeignKey<MerchantPeriod>(r => r.CountryCode)
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.MerchantId).HasColumnName("merchant_id");

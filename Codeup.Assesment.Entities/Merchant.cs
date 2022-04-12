@@ -10,7 +10,8 @@
         public virtual Country Country { get; set; }
         public virtual User Admin { get; set; }
         public virtual List<Product> Products { get; set; }
-        public virtual MerchantPeriod MerchantPeriod { get; set; }
+        public virtual MerchantPeriod MerchantPeriod1 { get; set; }
+        public virtual MerchantPeriod MerchantPeriod2 { get; set; }
 
     }
 }
