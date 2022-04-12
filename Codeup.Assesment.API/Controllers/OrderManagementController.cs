@@ -17,7 +17,7 @@ namespace Codeup.Assesment.API.Controllers
         {
             this._orderManagementService = orderManagementService;
         }
-        // GET: api/<OrderManagement>/orders
+        // GET: api/<OrderManagement>
         [HttpGet]
         public async Task<IActionResult> GetOrder()
         {
@@ -55,7 +55,7 @@ namespace Codeup.Assesment.API.Controllers
 
         // POST api/<OrderManagement>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateOrderDto order)
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDto order)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace Codeup.Assesment.API.Controllers
 
         // PUT api/<OrderManagement>/5
         [HttpPut("{orderId}")]
-        public async Task<IActionResult> Put(int orderId, [FromBody] UpdateOrderDto order)
+        public async Task<IActionResult> UpdateOrder(int orderId, [FromBody] UpdateOrderDto order)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace Codeup.Assesment.API.Controllers
 
         // DELETE api/<OrderManagement>/5
         [HttpDelete("{orderId}")]
-        public async Task<IActionResult> Delete(int orderId)
+        public async Task<IActionResult> DeleteOrder(int orderId)
         {
             try
             {
